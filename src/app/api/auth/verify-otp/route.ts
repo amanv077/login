@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import connectDB from '@/lib/mongodb'
+import { User } from '@/models'
 import { verifyOTP } from '@/lib/otp'
 
 export async function POST(req: NextRequest) {
   try {
+    await connectDB()
+    
     const { email, otp } = await req.json()
 
     if (!email || !otp) {
@@ -23,10 +26,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Update user's email verification status
-    await prisma.user.update({
-      where: { email },
-      data: { emailVerified: new Date() }
-    })
+    await User.updateOne(
+      { email },
+      { emailVerified: new Date() }
+    )
 
     return NextResponse.json({
       message: 'Email verified successfully. You can now login.'

@@ -1,11 +1,10 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
+import connectDB from "@/lib/mongodb"
+import { User } from "@/models"
 import bcrypt from "bcryptjs"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -18,10 +17,10 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
-          }
+        await connectDB()
+
+        const user = await User.findOne({
+          email: credentials.email
         })
 
         if (!user || !user.password) {
@@ -46,7 +45,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
-          id: user.id,
+          id: user._id.toString(),
           email: user.email,
           name: user.name,
           role: user.role,
@@ -72,7 +71,8 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     }
-  },  pages: {
+  },
+  pages: {
     signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,

@@ -141,8 +141,8 @@ export default function Home() {
               <div className="text-gray-600">Type Safety</div>
             </div>
             <div className="space-y-2">
-              <div className="text-2xl font-bold text-blue-600">Prisma</div>
-              <div className="text-gray-600">Database ORM</div>
+              <div className="text-2xl font-bold text-blue-600">Mongoose</div>
+              <div className="text-gray-600">MongoDB ODM</div>
             </div>
             <div className="space-y-2">
               <div className="text-2xl font-bold text-blue-600">NextAuth</div>

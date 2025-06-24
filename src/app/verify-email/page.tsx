@@ -104,8 +104,7 @@ export default function VerifyEmailPage() {
           </p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={handleVerify}>
-          <div>
+        <form className="mt-8 space-y-6" onSubmit={handleVerify}>          <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email address
             </label>
@@ -114,7 +113,8 @@ export default function VerifyEmailPage() {
               name="email"
               type="email"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              disabled
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-100 text-gray-500 cursor-not-allowed"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -130,7 +130,7 @@ export default function VerifyEmailPage() {
               name="otp"
               type="text"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               placeholder="Enter 6-digit code"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}

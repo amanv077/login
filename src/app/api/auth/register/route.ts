@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { prisma } from '@/lib/prisma'
+import connectDB from '@/lib/mongodb'
+import { User, EmailVerification } from '@/models'
 import { sendOTPEmail } from '@/lib/email'
-import { createEmailVerification } from '@/lib/otp'
+import { generateOTP } from '@/lib/otp'
 
 export async function POST(req: NextRequest) {
   try {
+    // Connect to MongoDB
+    await connectDB()
+
     const { name, email, password, role = 'USER' } = await req.json()
 
     // Validate input
@@ -24,9 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email }
-    })
+    const existingUser = await User.findOne({ email })
 
     if (existingUser) {
       return NextResponse.json(
@@ -39,22 +41,32 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-      }
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
     })
 
-    // Generate and send OTP
-    const { otp } = await createEmailVerification(email, user.id)
+    // Generate OTP and create email verification
+    const otp = generateOTP()
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+
+    await EmailVerification.create({
+      email,
+      otp,
+      expiresAt,
+      userId: user._id
+    })
+
+    // Send OTP email
     const emailResult = await sendOTPEmail(email, otp)
 
     if (!emailResult.success) {
-      // Delete the created user if email sending fails
-      await prisma.user.delete({ where: { id: user.id } })
+      // Delete the created user and verification if email sending fails
+      await User.findByIdAndDelete(user._id)
+      await EmailVerification.deleteOne({ email, otp })
+      
       return NextResponse.json(
         { error: 'Failed to send verification email' },
         { status: 500 }
@@ -63,7 +75,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       message: 'User registered successfully. Please check your email for verification code.',
-      userId: user.id
+      userId: user._id
     })
   } catch (error) {
     console.error('Registration error:', error)
@@ -74,13 +86,12 @@ export async function POST(req: NextRequest) {
       console.error('Error stack:', error.stack)
     }
 
-    // Check if this is a table not found error
-    if (error instanceof Error && error.message.includes('does not exist')) {
+    // Check for MongoDB connection errors
+    if (error instanceof Error && error.message.includes('ENOTFOUND')) {
       return NextResponse.json(
         { 
-          error: 'Database not initialized',
-          message: 'The database tables need to be created. Please run the database setup first.',
-          setupUrl: '/api/setup-db'
+          error: 'Database connection failed',
+          message: 'Unable to connect to the database. Please check your connection.',
         },
         { status: 503 }
       )

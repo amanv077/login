@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import connectDB from '@/lib/mongodb'
+import { User, EmailVerification } from '@/models'
 import { sendOTPEmail } from '@/lib/email'
-import { createEmailVerification } from '@/lib/otp'
+import { generateOTP } from '@/lib/otp'
 
 export async function POST(req: NextRequest) {
   try {
+    await connectDB()
+    
     const { email } = await req.json()
 
     if (!email) {
@@ -15,9 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Check if user exists
-    const user = await prisma.user.findUnique({
-      where: { email }
-    })
+    const user = await User.findOne({ email })
 
     if (!user) {
       return NextResponse.json(
@@ -34,18 +35,27 @@ export async function POST(req: NextRequest) {
     }
 
     // Invalidate old OTPs
-    await prisma.emailVerification.updateMany({
-      where: {
+    await EmailVerification.updateMany(
+      {
         email,
         status: 'PENDING'
       },
-      data: {
+      {
         status: 'FAILED'
       }
-    })
+    )
 
     // Generate and send new OTP
-    const { otp } = await createEmailVerification(email, user.id)
+    const otp = generateOTP()
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+
+    await EmailVerification.create({
+      email,
+      otp,
+      expiresAt,
+      userId: user._id
+    })
+
     const emailResult = await sendOTPEmail(email, otp)
 
     if (!emailResult.success) {
