@@ -123,17 +123,31 @@ export default function RegisterPage() {
     }
   }
 
-  return (    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-3 sm:mb-4">
-            <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            <svg
+              className="w-6 h-6 sm:w-8 sm:h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+              />
             </svg>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-          <p className="text-sm sm:text-base text-gray-600">Join us and get started today</p>
+          </div>          <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">
+            Create Account
+          </h1>
+          <p className="text-sm sm:text-base text-black">
+            Join us and get started today
+          </p>
         </div>
 
         {/* Form Card */}
@@ -141,7 +155,10 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Full Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-black mb-2"
+              >
                 Full Name
               </label>
               <input
@@ -149,16 +166,17 @@ export default function RegisterPage() {
                 name="name"
                 type="text"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white text-black"
                 placeholder="Enter your full name"
                 value={formData.name}
                 onChange={handleChange}
               />
             </div>
-
             {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+            <div>              <label
+                htmlFor="email"
+                className="block text-sm font-semibold text-black mb-2"
+              >
                 Email Address
               </label>
               <input
@@ -166,64 +184,88 @@ export default function RegisterPage() {
                 name="email"
                 type="email"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white text-black"
                 placeholder="Enter your email address"
                 value={formData.email}
                 onChange={handleChange}
               />
-            </div>            {/* Account Type */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
+            </div>{" "}
+            {/* Account Type */}            <div>
+              <label className="block text-sm font-semibold text-black mb-3">
                 Choose Account Type
-              </label>              <div className="grid grid-cols-2 gap-4">
-                {['USER', 'AGENT'].map((roleType) => {
-                  const roleInfo = getRoleInfo(roleType)
-                  const isSelected = formData.role === roleType
-                  return (                    <button
+              </label>{" "}
+              <div className="grid grid-cols-2 gap-4">
+                {["USER", "AGENT"].map((roleType) => {
+                  const roleInfo = getRoleInfo(roleType);
+                  const isSelected = formData.role === roleType;
+                  return (
+                    <button
                       key={roleType}
                       type="button"
-                      onClick={() => setFormData({ ...formData, role: roleType })}
+                      onClick={() =>
+                        setFormData({ ...formData, role: roleType })
+                      }
                       className={`relative p-4 sm:p-5 rounded-xl border-2 transition-all duration-200 text-center group hover:scale-105 ${
                         isSelected
                           ? `${roleInfo.borderColor} bg-gradient-to-br from-white to-gray-50 shadow-lg`
-                          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
                       }`}
                     >
-                      <div className={`w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full flex items-center justify-center text-white text-lg sm:text-xl ${
-                        isSelected ? roleInfo.color : 'bg-gray-400 group-hover:bg-gray-500'
-                      }`}>
+                      <div
+                        className={`w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full flex items-center justify-center text-white text-lg sm:text-xl ${
+                          isSelected
+                            ? roleInfo.color
+                            : "bg-gray-400 group-hover:bg-gray-500"
+                        }`}
+                      >
                         {roleInfo.icon}
-                      </div>
-                      <div className={`font-medium text-sm sm:text-base ${isSelected ? 'text-gray-900' : 'text-gray-600'}`}>
+                      </div>                      <div
+                        className={`font-medium text-sm sm:text-base ${
+                          isSelected ? "text-black" : "text-black"
+                        }`}
+                      >
                         {roleInfo.name}
                       </div>
                       {isSelected && (
                         <div className="absolute -top-1 -right-1">
-                          <div className={`w-6 h-6 ${roleInfo.color} rounded-full flex items-center justify-center`}>
-                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          <div
+                            className={`w-6 h-6 ${roleInfo.color} rounded-full flex items-center justify-center`}
+                          >
+                            <svg
+                              className="w-4 h-4 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
                             </svg>
                           </div>
                         </div>
                       )}
                     </button>
-                  )
+                  );
                 })}
               </div>
             </div>
-
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-semibold text-black mb-2"
+              >
                 Password
               </label>
               <div className="relative">
                 <input
                   id="password"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white pr-12"
+                  type={showPassword ? "text" : "password"}
+                  required                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white pr-12 text-black"
                   placeholder="Create a strong password"
                   value={formData.password}
                   onChange={handleChange}
@@ -240,46 +282,56 @@ export default function RegisterPage() {
                   )}
                 </button>
               </div>
-              
+
               {/* Password Strength Indicator */}
               {formData.password && (
-                <div className="mt-3">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-gray-600">Password strength</span>
-                    <span className={`text-xs font-medium ${
-                      passwordStrength.feedback === 'Weak' ? 'text-red-600' :
-                      passwordStrength.feedback === 'Medium' ? 'text-yellow-600' : 'text-green-600'
-                    }`}>
+                <div className="mt-3">                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs text-black">
+                      Password strength
+                    </span>
+                    <span
+                      className={`text-xs font-medium ${
+                        passwordStrength.feedback === "Weak"
+                          ? "text-red-600"
+                          : passwordStrength.feedback === "Medium"
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                      }`}
+                    >
                       {passwordStrength.feedback}
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
                       className={`h-2 rounded-full transition-all duration-300 ${passwordStrength.color}`}
-                      style={{ width: `${(passwordStrength.score / 6) * 100}%` }}
+                      style={{
+                        width: `${(passwordStrength.score / 6) * 100}%`,
+                      }}
                     ></div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  </div>                  <p className="text-xs text-black mt-1">
                     Use 8+ characters with a mix of letters, numbers & symbols
                   </p>
                 </div>
               )}
             </div>
-
             {/* Confirm Password */}
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+            <div>              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-semibold text-black mb-2"
+              >
                 Confirm Password
               </label>
               <div className="relative">
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  required
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white pr-12 ${
-                    formData.confirmPassword === '' ? 'border-gray-300' :
-                    passwordsMatch ? 'border-green-300 focus:border-green-500' : 'border-red-300 focus:border-red-500'
+                  type={showConfirmPassword ? "text" : "password"}
+                  required                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 transition-colors placeholder-gray-400 bg-gray-50 focus:bg-white pr-12 text-black ${
+                    formData.confirmPassword === ""
+                      ? "border-gray-300"
+                      : passwordsMatch
+                      ? "border-green-300 focus:border-green-500"
+                      : "border-red-300 focus:border-red-500"
                   }`}
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
@@ -289,12 +341,32 @@ export default function RegisterPage() {
                   {formData.confirmPassword && (
                     <div className="mr-1">
                       {passwordsMatch ? (
-                        <svg className="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <svg
+                          className="h-5 w-5 text-green-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
                         </svg>
                       ) : (
-                        <svg className="h-5 w-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                          className="h-5 w-5 text-red-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
                         </svg>
                       )}
                     </div>
@@ -310,51 +382,87 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
-              </div>
-              
-              {formData.confirmPassword && !passwordsMatch && (
-                <p className="mt-1 text-xs text-red-600">Passwords do not match</p>
+              </div>              {formData.confirmPassword && !passwordsMatch && (
+                <p className="mt-1 text-xs text-red-600">
+                  Passwords do not match
+                </p>
               )}
             </div>
-
             {/* Error/Success Messages */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3">
                 <div className="flex">
-                  <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   <p className="ml-2 text-sm text-red-600">{error}</p>
                 </div>
               </div>
             )}
-            
             {message && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                 <div className="flex">
-                  <svg className="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="h-5 w-5 text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   <p className="ml-2 text-sm text-green-600">{message}</p>
                 </div>
               </div>
             )}
-
-            {/* Submit Button */}            <button
+            {/* Submit Button */}{" "}
+            <button
               type="submit"
-              disabled={loading || !passwordsMatch || formData.password.length < 8}
+              disabled={
+                loading || !passwordsMatch || formData.password.length < 8
+              }
               className="w-full bg-purple-600 text-white py-3 sm:py-4 px-4 rounded-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center text-sm sm:text-base"
             >
               {loading ? (
                 <>
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Creating Account...
                 </>
               ) : (
-                'Create Account'
+                "Create Account"
               )}
             </button>
           </form>
@@ -364,31 +472,29 @@ export default function RegisterPage() {
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
+              </div>              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-black">
+                  Already have an account?
+                </span>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
-              </div>
-            </div>
-            
-            <Link
+            </div>            <Link
               href="/login"
-              className="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center"
+              className="w-full bg-gray-100 text-black py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center"
             >
               Sign in instead
             </Link>
           </div>
         </div>
 
-        {/* Back to Home */}
-        <div className="text-center mt-6">
+        {/* Back to Home */}        <div className="text-center mt-6">
           <Link
             href="/"
-            className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
+            className="text-black hover:text-gray-800 font-medium transition-colors"
           >
             ← Back to home
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
