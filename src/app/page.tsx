@@ -151,25 +151,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      {/* Database Setup Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            🚀 First Time Setup Required
-          </h2>
-          <p className="text-gray-700 mb-6">
-            Before you can register and use the app, the database tables need to be created.
-            This is a one-time setup process.
-          </p>
-          <Link
-            href="/setup"
-            className="bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors inline-block"
-          >
-            Setup Database
-          </Link>
-        </div>
-      </div>
     </div>
   )
 }

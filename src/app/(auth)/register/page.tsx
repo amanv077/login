@@ -111,39 +111,34 @@ export default function RegisterPage() {
       [e.target.name]: e.target.value
     })
   }
-
+  
   const getRoleInfo = (role: string) => {
     switch (role) {
       case 'USER':
-        return { icon: '👤', name: 'User', description: 'Standard access with basic features' }
+        return { icon: '👤', name: 'User', color: 'bg-blue-500', borderColor: 'border-blue-500' }
       case 'AGENT':
-        return { icon: '🏢', name: 'Agent', description: 'Extended permissions for business operations' }
-      case 'ADMIN':
-        return { icon: '⚙️', name: 'Administrator', description: 'Full system access and management' }
+        return { icon: '🏢', name: 'Agent', color: 'bg-green-500', borderColor: 'border-green-500' }
       default:
-        return { icon: '👤', name: 'User', description: 'Standard access with basic features' }
+        return { icon: '👤', name: 'User', color: 'bg-blue-500', borderColor: 'border-blue-500' }
     }
   }
 
-  const currentRoleInfo = getRoleInfo(formData.role)
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+  return (    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-md mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-purple-600 rounded-2xl flex items-center justify-center mb-3 sm:mb-4">
+            <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-          <p className="text-gray-600">Join us and get started today</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+          <p className="text-sm sm:text-base text-gray-600">Join us and get started today</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Full Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -176,32 +171,44 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
               />
-            </div>
-
-            {/* Account Type */}
+            </div>            {/* Account Type */}
             <div>
-              <label htmlFor="role" className="block text-sm font-semibold text-gray-700 mb-2">
-                Account Type
-              </label>
-              <select
-                id="role"
-                name="role"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors bg-gray-50 focus:bg-white text-black"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="USER">👤 User</option>
-                <option value="AGENT">🏢 Agent</option>
-                <option value="ADMIN">⚙️ Administrator</option>
-              </select>
-              <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-2">
-                  <span className="text-lg">{currentRoleInfo.icon}</span>
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">{currentRoleInfo.name}</p>
-                    <p className="text-xs text-gray-600">{currentRoleInfo.description}</p>
-                  </div>
-                </div>
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                Choose Account Type
+              </label>              <div className="grid grid-cols-2 gap-4">
+                {['USER', 'AGENT'].map((roleType) => {
+                  const roleInfo = getRoleInfo(roleType)
+                  const isSelected = formData.role === roleType
+                  return (                    <button
+                      key={roleType}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, role: roleType })}
+                      className={`relative p-4 sm:p-5 rounded-xl border-2 transition-all duration-200 text-center group hover:scale-105 ${
+                        isSelected
+                          ? `${roleInfo.borderColor} bg-gradient-to-br from-white to-gray-50 shadow-lg`
+                          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                      }`}
+                    >
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full flex items-center justify-center text-white text-lg sm:text-xl ${
+                        isSelected ? roleInfo.color : 'bg-gray-400 group-hover:bg-gray-500'
+                      }`}>
+                        {roleInfo.icon}
+                      </div>
+                      <div className={`font-medium text-sm sm:text-base ${isSelected ? 'text-gray-900' : 'text-gray-600'}`}>
+                        {roleInfo.name}
+                      </div>
+                      {isSelected && (
+                        <div className="absolute -top-1 -right-1">
+                          <div className={`w-6 h-6 ${roleInfo.color} rounded-full flex items-center justify-center`}>
+                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
@@ -333,11 +340,10 @@ export default function RegisterPage() {
               </div>
             )}
 
-            {/* Submit Button */}
-            <button
+            {/* Submit Button */}            <button
               type="submit"
               disabled={loading || !passwordsMatch || formData.password.length < 8}
-              className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center"
+              className="w-full bg-purple-600 text-white py-3 sm:py-4 px-4 rounded-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center text-sm sm:text-base"
             >
               {loading ? (
                 <>
